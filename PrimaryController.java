@@ -1,39 +1,41 @@
-package com.mycompany.ej1;
+package com.mycompany.ej1_2;
 
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 
 public class PrimaryController {
-
-    @FXML private Button btnCalcular;
-    @FXML private Button btnLimpiar;
-    @FXML private TextField edad; 
-    @FXML private Label edadT;   
+    
+    @FXML private TextField txDinero;
+    @FXML private Button desglosar;
+    @FXML private Button x;
+    @FXML private TextArea txResul;
+    
+    
+    
     
     @FXML
-    private void btnCalcular_click() throws IOException {
-
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        LocalDate fechaNacimiento = LocalDate.parse(edad.getText().trim(), formato);
-
-        Period periodo = Period.between(fechaNacimiento, LocalDate.now());
-
-        int anios = periodo.getYears();
-        int meses = periodo.getMonths();
+    private void desglosar() {
         
-        edadT.setText(anios + " años y " + meses + " meses");    
+        int dinero = Integer.parseInt(txDinero.getText());
+        int denomin [] = {500,200,100,50,20,10,5,2,1};
+        String re = " ";
+        
+        for (int i = 0; i < denomin.length; i++) {
+            int cantidad = dinero / denomin[i];
+            re += denomin[i] + "$  " + cantidad + "\n";
+            
+            dinero = dinero % denomin[i];
+        }
+        txResul.setText(re);
     }
-        
+    
     @FXML
-    private void btnLimpiar_click() throws IOException {
-        edad.clear();
-        edadT.setText("");
+    private void x() throws IOException {
+        txDinero.clear();
+        txResul.clear();
+        
     }
 }
